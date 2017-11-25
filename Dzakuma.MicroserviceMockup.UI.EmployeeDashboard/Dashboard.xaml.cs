@@ -27,27 +27,32 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 		public Dashboard()
 		{
 			InitializeComponent();
+			RefreshPersonnelList();
 		}
 
 		private void GeneralEmployeeDataRefresh_OnClick(object sender, RoutedEventArgs e)
+		{
+			RefreshPersonnelList();
+		}
+
+		public int RefreshPersonnelList()
 		{
 			var data = _dataSiphon.DeserializeJsonString(_executablePath, "--all");
 			PersonnelList.Items.Clear();
 
 			foreach (var child in data.personnelList.Children<JObject>())
 			{
-				//var a = (string) child["id"];
-				//var b = (string) child["first_name"];
-				//var c = (string)child["last_name"];
-				//var properties = child.Children<JProperty>();
 				PersonnelList.Items.Add(
-					new {
+					new
+					{
 						Id = (string)child["id"],
 						FirstName = (string)child["first_name"],
 						LastName = (string)child["last_name"]
 					}
 				);
 			}
+
+			return PersonnelList.Items.Count;
 		}
 	}
 }

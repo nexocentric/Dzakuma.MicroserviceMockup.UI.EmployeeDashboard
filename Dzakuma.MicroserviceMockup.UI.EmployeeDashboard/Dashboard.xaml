@@ -8,7 +8,7 @@
         Title="Dashboard" Height="350" Width="525">
     <Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="3*"></ColumnDefinition>
+			<ColumnDefinition Width="200"></ColumnDefinition>
 			<ColumnDefinition Width="7*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
         
@@ -16,24 +16,25 @@
 			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
 		
-		<StackPanel Grid.Column="0" Grid.Row="0">
-			<StackPanel>
-				<Button Name="GeneralEmployeeDataRefresh" Content="Refresh" Click="GeneralEmployeeDataRefresh_OnClick"></Button>
-			</StackPanel>
-			
-			<StackPanel>
-				<ListBox Name="PersonnelList">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<WrapPanel Uid="{Binding Id}">
-								<TextBlock Text="{Binding LastName}"></TextBlock>
-								<TextBlock Text=", "></TextBlock>
-								<TextBlock Text="{Binding FirstName}"></TextBlock>
-							</WrapPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</StackPanel>
-		</StackPanel>
+		<Grid Grid.Column="0" Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+
+			<Button Grid.Row="0" Name="GeneralEmployeeDataRefresh" Content="Refresh" Click="GeneralEmployeeDataRefresh_OnClick"></Button>
+
+			<ListBox Name="PersonnelList" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Stretch">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<WrapPanel Uid="{Binding Id}">
+							<TextBlock Text="{Binding LastName}" FontSize="16"></TextBlock>
+							<TextBlock Text=", " FontSize="16"></TextBlock>
+							<TextBlock Text="{Binding FirstName}" FontSize="16"></TextBlock>
+						</WrapPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
     </Grid>
 </Window>
