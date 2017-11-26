@@ -22,7 +22,7 @@
 				<RowDefinition Height="*"></RowDefinition>
 			</Grid.RowDefinitions>
 
-			<Button Grid.Row="0" Name="GeneralEmployeeDataRefresh" Content="Refresh" Click="GeneralEmployeeDataRefresh_OnClick"></Button>
+			<Button Grid.Row="0" Name="GeneralEmployeeDataRefresh" FontSize="16" Content="Refresh" Click="GeneralEmployeeDataRefresh_OnClick"></Button>
 
 			<ListBox Name="PersonnelList" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Stretch">
 				<ListBox.ItemTemplate>
@@ -44,7 +44,7 @@
 
 			<TextBlock FontSize="18" Foreground="DarkGreen" Margin="10" HorizontalAlignment="Center">Favorite Animal</TextBlock>
 			<Image Name="AnimalPreference" Width="200" Height="200" Margin="10" HorizontalAlignment="Center"></Image>
-			<Button Name="MoviePreferences" FontSize="18" Margin="10,5,10,5">Click here to see movie preferences!</Button>
+			<Button Name="MoviePreferences" FontSize="18" Margin="10,5,10,5" Click="MoviePreferences_OnClick">Click here to see movie preferences!</Button>
 		</StackPanel>
     </Grid>
 </Window>

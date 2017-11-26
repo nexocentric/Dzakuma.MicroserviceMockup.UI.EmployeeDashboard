@@ -3,13 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Newtonsoft.Json.Linq;
 
 namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 {
-	/// <summary>
-	/// Interaction logic for Dashboard.xaml
-	/// </summary>
 	public partial class Dashboard : Window
 	{
 		PersonnelInformationSelector _personnelSelector = new PersonnelInformationSelector();
@@ -21,6 +17,20 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			GetBioInfoormation("1");
 			LoadBioPicture("1");
 			LoadAnimalPreference("1");
+		}
+
+		private void PersonelList_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			var selectedItem = (WrapPanel)sender;
+			var id = (string)selectedItem.Uid;
+			GetBioInfoormation(id);
+			LoadBioPicture(id);
+			LoadAnimalPreference(id);
+		}
+
+		private void MoviePreferences_OnClick(object sender, RoutedEventArgs e)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void GeneralEmployeeDataRefresh_OnClick(object sender, RoutedEventArgs e)
@@ -59,22 +69,6 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			var information = _personnelSelector.GetBioInfoormation(id);
 			EmployeeName.Text = $"Employee Name: {information.FirstName} {information.LastName}";
 			EmployeeDepartment.Text = $"Department: {information.Department}";
-		}
-
-		private void PersonelList_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			try
-			{
-				var selectedItem = (WrapPanel)sender;
-				var id = (string)selectedItem.Uid;
-				GetBioInfoormation(id);
-				LoadBioPicture(id);
-				LoadAnimalPreference(id);
-			}
-			catch (Exception anomaly)
-			{
-				
-			}
 		}
 	}
 }
