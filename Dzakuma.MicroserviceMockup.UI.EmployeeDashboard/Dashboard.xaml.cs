@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,28 +10,34 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 	public partial class Dashboard : Window
 	{
 		PersonnelInformationSelector _personnelSelector = new PersonnelInformationSelector();
+		private string _selectedId = "1";
 
 		public Dashboard()
 		{
 			InitializeComponent();
 			RefreshPersonnelList();
-			GetBioInfoormation("1");
-			LoadBioPicture("1");
-			LoadAnimalPreference("1");
+			GetBioInfoormation(_selectedId);
+			LoadBioPicture(_selectedId);
+			LoadAnimalPreference(_selectedId);
 		}
 
 		private void PersonelList_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			var selectedItem = (WrapPanel)sender;
-			var id = (string)selectedItem.Uid;
-			GetBioInfoormation(id);
-			LoadBioPicture(id);
-			LoadAnimalPreference(id);
+			_selectedId = (string)selectedItem.Uid;
+			GetBioInfoormation(_selectedId);
+			LoadBioPicture(_selectedId);
+			LoadAnimalPreference(_selectedId);
 		}
 
 		private void MoviePreferences_OnClick(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			var testProgram = new Process();
+			testProgram.StartInfo.FileName = @"C:\repositories\Dzakuma.MicroserviceMockup.UI.MoviePreferences\Dzakuma.MicroserviceMockup.UI.MoviePreferences\bin\Debug\Dzakuma.MicroserviceMockup.UI.MoviePreferences.exe";
+			testProgram.StartInfo.Arguments = $"--id {_selectedId}";
+			testProgram.StartInfo.UseShellExecute = false;
+			testProgram.Start();
+			testProgram.WaitForExit();
 		}
 
 		private void GeneralEmployeeDataRefresh_OnClick(object sender, RoutedEventArgs e)

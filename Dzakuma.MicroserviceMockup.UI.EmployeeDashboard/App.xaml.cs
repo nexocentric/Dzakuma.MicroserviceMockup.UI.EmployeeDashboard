@@ -29,9 +29,9 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 
 		protected override void OnStartup(StartupEventArgs args)
 		{
-			if (!ValidateProgramArguments(args.Args))
+			if (ValidateProgramArguments(args.Args) && _outputData && !string.IsNullOrEmpty(_selectedId))
 			{
-				DisplayGui();
+				CreateConsole();
 			}
 
 			DisplayGui();
@@ -40,10 +40,15 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 		public void CreateConsole()
 		{
 			AttachConsole(-1);
-			Console.WriteLine("Start");
-			System.Threading.Thread.Sleep(1000);
-			Console.WriteLine("Stop");
+			OutputBioPictureUrl();
 			Shutdown(0);
+		}
+
+		public void OutputBioPictureUrl()
+		{
+			var personnelSelector = new PersonnelInformationSelector();
+			var bioPictureUrl = personnelSelector.GetBioPictureUrl(_selectedId).ToString();
+			Console.Error.Write(TransportSafeString.Encode(bioPictureUrl));
 		}
 
 		public bool ValidateProgramArguments(string[] args)
@@ -64,12 +69,12 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 		{
 			return new OptionSet
 			{
-				{ "t|top", "Runs diagnostic tests on this service.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
+				{ "t|top=", "Runs diagnostic tests on this service.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
 				{ "l|left=", "Gets information for the person matching the specified ID.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
-				{ "w|width", "Gets the movie preferences of the specified ID. ID must be specified.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
-				{ "h|height", "Gets general information for the specified ID. ID must be specified.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
+				{ "w|width=", "Gets the movie preferences of the specified ID. ID must be specified.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
+				{ "h|height=", "Gets general information for the specified ID. ID must be specified.", o => { if (double.TryParse(o, out var test)) { _top = double.Parse(o); } } },
 				{ "d|data", "Gets a list of all personnel.", o => { if (o != null) { _outputData = true; } } },
-				{ "i|id", "Gets a list of all personnel.", o => { if (o != null) { _selectedId = o; } } },
+				{ "i|id=", "Gets a list of all personnel.", o => { if (o != null) { _selectedId = o; } } },
 			};
 		}
 
