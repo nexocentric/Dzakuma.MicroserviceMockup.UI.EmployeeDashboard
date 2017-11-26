@@ -22,6 +22,7 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			var items = new List<PersonnelItem>();
 			var data = _dataSiphon.DeserializeJsonString(_executablePath, "--all");
 
+			//TODO: There is a failed test that illustrates what this catches
 			foreach (var child in data.personnelList.Children<JObject>())
 			{
 				items.Add(
@@ -45,7 +46,7 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			return new Uri($@"https://loremflickr.com/300/300/portrait,{genderId}?lock={id}", UriKind.Absolute);
 		}
 
-		public PersonnelItem GetBioInfoormation(string id)
+		public PersonnelItem GetBioInformation(string id)
 		{
 			var data = _dataSiphon.DeserializeJsonString(_executablePath, $"--general --id {id}");
 			var employeeData = data.individualData;
@@ -62,11 +63,11 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 		public Uri GetAnimalPreferenceUrl(string id)
 		{
 			int preference = AnimalPreference(id);
-			string imageUrl = preference == 0 ? @"https://loremflickr.com/200/200/cat" : @"https://placebear.com/200/200";
+			string imageUrl = preference == 0 ? @"https://loremflickr.com/200/200/cat" : @"https://placebear.com/200/200/dog";
 			return new Uri(imageUrl, UriKind.Absolute);
 		}
 
-		private int AnimalPreference(string id)
+		public int AnimalPreference(string id)
 		{
 			//TODO: This will always return an error due to the favorite animal not being
 			//      available

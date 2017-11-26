@@ -9,6 +9,9 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 {
 	public partial class Dashboard : Window
 	{
+		//TODO: Illustrate how you detached output from the user interface so that
+		//      it can be tested separate from the user interface
+		//      personnelSelector is the class that allows this to happen
 		PersonnelInformationSelector _personnelSelector = new PersonnelInformationSelector();
 		private string _selectedId = "1";
 
@@ -73,7 +76,7 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 
 		public void GetBioInfoormation(string id)
 		{
-			var information = _personnelSelector.GetBioInfoormation(id);
+			var information = _personnelSelector.GetBioInformation(id);
 			EmployeeName.Text = $"Employee Name: {information.FirstName} {information.LastName}";
 			EmployeeDepartment.Text = $"Department: {information.Department}";
 		}
