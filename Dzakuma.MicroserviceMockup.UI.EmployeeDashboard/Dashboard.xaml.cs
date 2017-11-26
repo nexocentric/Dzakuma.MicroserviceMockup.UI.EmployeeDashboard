@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Newtonsoft.Json.Linq;
 
 namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
@@ -21,16 +12,15 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 	/// </summary>
 	public partial class Dashboard : Window
 	{
-		private string _executablePath = @"C:\repositories\Dzakuma.MicroserviceMockup.EmployeeData\Dzakuma.MicroserviceMockup.EmployeeData\bin\Debug\Dzakuma.MicroserviceMockup.EmployeeData.exe";
-		private InterprocessDataSiphon _dataSiphon = new InterprocessDataSiphon();
+		PersonnelInformationSelector _personnelSelector = new PersonnelInformationSelector();
 
 		public Dashboard()
 		{
 			InitializeComponent();
 			RefreshPersonnelList();
 			GetBioInfoormation("1");
-			LoadBioPicture("1", "Male");
-			LoadAnimalPreference(0);
+			LoadBioPicture("1");
+			LoadAnimalPreference("1");
 		}
 
 		private void GeneralEmployeeDataRefresh_OnClick(object sender, RoutedEventArgs e)
@@ -40,59 +30,35 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 
 		public int RefreshPersonnelList()
 		{
-			var data = _dataSiphon.DeserializeJsonString(_executablePath, "--all");
 			PersonnelList.Items.Clear();
-
-			foreach (var child in data.personnelList.Children<JObject>())
-			{
-				PersonnelList.Items.Add(
-					new
-					{
-						Id = (string)child["id"],
-						FirstName = (string)child["first_name"],
-						LastName = (string)child["last_name"]
-					}
-				);
-			}
-
+			PersonnelList.ItemsSource = _personnelSelector.GetPersonnelList();
 			return PersonnelList.Items.Count;
 		}
 
-		private void LoadBioPicture(string id, string gender)
+		private void LoadBioPicture(string id)
 		{
-			string genderId = gender == "Female" ? "woman" : "man";
+			Mug.Source = LoadImageFromUrl(_personnelSelector.GetBioPictureUrl(id));
+		}
+
+		private void LoadAnimalPreference(string id)
+		{
+			AnimalPreference.Source = LoadImageFromUrl(_personnelSelector.GetAnimalPreferenceUrl(id));
+		}
+
+		private BitmapImage LoadImageFromUrl(Uri imageSource)
+		{
 			var picture = new BitmapImage();
 			picture.BeginInit();
-			picture.UriSource = new Uri($@"https://loremflickr.com/300/300/portrait,{genderId}?lock={id}", UriKind.Absolute);
+			picture.UriSource = imageSource;
 			picture.EndInit();
-			Mug.Source = picture;
+			return picture;
 		}
 
 		public void GetBioInfoormation(string id)
 		{
-			var data = _dataSiphon.DeserializeJsonString(_executablePath, $"--general --id {id}");
-			var employeeData = data.individualData;
-
-			EmployeeName.Text = string.Format(
-				"Employee Name: {0} {1}",
-				(string)employeeData["first_name"],
-				(string)employeeData["last_name"]
-			);
-
-			EmployeeDepartment.Text = string.Format(
-				"Department: {0}",
-				(string)employeeData["department"]
-			);
-		}
-
-		private void LoadAnimalPreference(int preference)
-		{
-			string imageUrl = preference == 0 ? @"https://loremflickr.com/200/200/cat" : @"https://placebear.com/200/200";
-			var picture = new BitmapImage();
-			picture.BeginInit();
-			picture.UriSource = new Uri(imageUrl, UriKind.Absolute);
-			picture.EndInit();
-			AnimalPreference.Source = picture;
+			var information = _personnelSelector.GetBioInfoormation(id);
+			EmployeeName.Text = $"Employee Name: {information.FirstName} {information.LastName}";
+			EmployeeDepartment.Text = $"Department: {information.Department}";
 		}
 
 		private void PersonelList_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -102,8 +68,8 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 				var selectedItem = (WrapPanel)sender;
 				var id = (string)selectedItem.Uid;
 				GetBioInfoormation(id);
-				LoadBioPicture(id, "Male"); //this is a part of the demo that needs to be changed
-				LoadAnimalPreference(0);
+				LoadBioPicture(id);
+				LoadAnimalPreference(id);
 			}
 			catch (Exception anomaly)
 			{

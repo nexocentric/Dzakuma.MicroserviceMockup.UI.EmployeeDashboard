@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dzakuma.MicroserviceMockup.UI.EmployeeDashboard"
         mc:Ignorable="d"
-        Title="Dashboard" Height="760" Width="800">
+        Title="Dashboard" Height="750" Width="800">
     <Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="200"></ColumnDefinition>

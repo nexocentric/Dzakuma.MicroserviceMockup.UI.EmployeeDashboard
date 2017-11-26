@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="InterprocessDataSiphon.cs" />
+    <Compile Include="PersonnelInformationSelector.cs" />
     <Compile Include="TransportSafeString.cs" />
     <Page Include="Dashboard.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using NLog;
-using Newtonsoft;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
@@ -31,6 +24,7 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			}
 			catch (Exception anomaly)
 			{
+				_internalLogger.Trace(anomaly, "The selected object is not a JSON object.");
 				return null;
 			}
 		}
@@ -43,6 +37,7 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			}
 			catch (Exception anomaly)
 			{
+				_internalLogger.Trace(anomaly, "The selected object is not a JSON array.");
 				return null;
 			}
 		}
