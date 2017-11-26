@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboardTests
 {
+	//TODO: run tests for the program and talk about how it can help quality
     public class PersonnelInformationSelectorTests
     {
 	    public class GetPersonnelList
