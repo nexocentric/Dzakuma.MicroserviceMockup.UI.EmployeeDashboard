@@ -63,7 +63,7 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 		public Uri GetAnimalPreferenceUrl(string id)
 		{
 			int preference = AnimalPreference(id);
-			string imageUrl = preference == 0 ? @"https://loremflickr.com/200/200/cat" : @"https://placebear.com/200/200/dog";
+			string imageUrl = preference == 0 ? @"https://placekitten.com/g/200/200" : @"https://placebear.com/200/200";
 			return new Uri(imageUrl, UriKind.Absolute);
 		}
 
