@@ -78,8 +78,8 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboardTests
 			    {
 				    if (containsCat && containsDog) { break; }
 				    var testUrl = testObject.GetAnimalPreferenceUrl(id.ToString()).AbsolutePath;
-				    if (!containsCat) { containsCat = testUrl.Contains("cat"); }
-				    if (!containsDog) { containsDog = testUrl.Contains("dog"); }
+				    if (!containsCat) { containsCat = testUrl.Contains("kitten"); }
+				    if (!containsDog) { containsDog = testUrl.Contains("bear"); }
 			    }
 			    Assert.True(containsCat && containsDog);
 			}
