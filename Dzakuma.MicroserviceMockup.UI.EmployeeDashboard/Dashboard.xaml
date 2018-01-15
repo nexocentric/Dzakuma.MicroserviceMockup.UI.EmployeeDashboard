@@ -27,11 +27,13 @@
 			<ListBox Name="PersonnelList" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Stretch">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<WrapPanel Uid="{Binding Id}" MouseLeftButtonDown="PersonelList_OnMouseLeftButtonDown">
-							<TextBlock Text="{Binding LastName}" FontSize="16"></TextBlock>
-							<TextBlock Text=", " FontSize="16"></TextBlock>
-							<TextBlock Text="{Binding FirstName}" FontSize="16"></TextBlock>
-						</WrapPanel>
+						<Button Uid="{Binding Id}" HorizontalAlignment="Stretch" Click="Employee_OnClick" BorderThickness="0" Background="White">
+							<WrapPanel>
+								<TextBlock Text="{Binding LastName}" FontSize="16"></TextBlock>
+								<TextBlock Text=", " FontSize="16"></TextBlock>
+								<TextBlock Text="{Binding FirstName}" FontSize="16"></TextBlock>
+							</WrapPanel>
+						</Button>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>

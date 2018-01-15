@@ -24,15 +24,6 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			LoadAnimalPreference(_selectedId);
 		}
 
-		private void PersonelList_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			var selectedItem = (WrapPanel)sender;
-			_selectedId = (string)selectedItem.Uid;
-			GetBioInfoormation(_selectedId);
-			LoadBioPicture(_selectedId);
-			LoadAnimalPreference(_selectedId);
-		}
-
 		private void MoviePreferences_OnClick(object sender, RoutedEventArgs e)
 		{
 			var testProgram = new Process();
@@ -48,9 +39,18 @@ namespace Dzakuma.MicroserviceMockup.UI.EmployeeDashboard
 			RefreshPersonnelList();
 		}
 
+		private void Employee_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedItem = (Button)sender;
+			_selectedId = (string)selectedItem.Uid;
+			GetBioInfoormation(_selectedId);
+			LoadBioPicture(_selectedId);
+			LoadAnimalPreference(_selectedId);
+		}
+
 		public int RefreshPersonnelList()
 		{
-			PersonnelList.Items.Clear();
+			//PersonnelList.Items.Clear();
 			PersonnelList.ItemsSource = _personnelSelector.GetPersonnelList();
 			return PersonnelList.Items.Count;
 		}
